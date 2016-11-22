@@ -13,7 +13,6 @@ map<pair<string, string>, List> Grafo::newGrafo(string initials, string day) {
 	aux.first = day;
 	aux.second = initials;
 	this->G[aux] = *new List();
-	this->vertices += 1;
 
 	return this->G;
 }
@@ -23,37 +22,43 @@ Grafo::Grafo(string initials, string day) {
 	aux.first = day;
 	aux.second = initials;
 	this->G[aux] = *new List();
-	this->vertices += 1;
 }
 
-void Grafo::insertGrafo(string initials, string day, string voo, string hour, string duration, string destination) {
+void Grafo::insertGrafo(string initials, string day, string voo, string hour, string duration, string destination, string arrival) {
 	pair<string, string> aux;
 
 	if (this->G.size() == 0) {
 		this->G = this->newGrafo(initials, day);
 	}
 	else {
-		if (!this->find(initials, day)) {
-			/*if (this->G[vertice].findElement(value) && value != vertice) {
-				this->G[vertice].findAndAttribute(value);
-			}
-			else if (value == vertice) {
-				//Nda
-			}
-			else {
-				this->G[vertice].insertLast(value, 1);
-			}*/
+		if (!this->find(initials, day) && initials == "KMIA") {
 			aux.first = day;
 			aux.second = initials;
 			this->G[aux] = *new List();
+			if (!this->G[aux].findEdge(hour, duration, voo) && arrival != "" && arrival != "CANCELADO") {
+				aux.first = day;
+				aux.second = initials;
+				this->G[aux].insertFirst(destination, day, hour, duration, voo);
+				if (!this->find(destination, arrival)) {
+					aux.first = arrival;
+					aux.second = destination;
+					this->G[aux] = *new List();
+				}
+			}
 		}
 		else {
-			//this->G[vertice] = *new List(vertice, 0);
+			aux.first = day;
+			aux.second = initials;
+			if (!this->G[aux].findEdge(hour, duration, voo) && arrival != "" && arrival != "CANCELADO") {
+				this->G[aux].insertFirst(destination, day, hour, duration, voo);
+				if (!this->find(destination, arrival)) {
+					aux.first = arrival;
+					aux.second = destination;
+					this->G[aux] = *new List();
+				}
+			}
 		}
 	}
-
-	//this->nVertices = this->getVertices();
-	//this->nArestas = this->getArestas();
 }
 
 bool Grafo::find(string initials, string day) {

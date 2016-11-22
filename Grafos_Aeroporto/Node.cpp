@@ -15,10 +15,10 @@ Node::Node(string initials, string day) {
 	this->prox = NULL;
 }
 
-Node::Node(string initials, string day, string hour, string duration) {
+Node::Node(string initials, string day, string hour, string duration, string voo) {
 	this->initials = initials;
 	this->day = day;
-	this->edge = *new Edge(hour, duration);
+	this->edge = *new Edge(hour, duration, voo);
 	this->prox = NULL;
 }
 

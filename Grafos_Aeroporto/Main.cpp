@@ -2,9 +2,9 @@
 #include "ReadData.h"
 
 void main(void) {
-	Grafo G;
+	Grafo *G= new Grafo();
 	ReadData R;
 
-	R.readFile("mes072016.csv", &G);
+	R.readFile("mes072016.csv", G);
 	system("pause");
 }

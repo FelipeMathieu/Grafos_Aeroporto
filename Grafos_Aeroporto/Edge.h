@@ -14,7 +14,7 @@ private:
 public:
 	Edge();
 	~Edge();
-	Edge(string hour, string duration);
+	Edge(string hour, string duration, string voo);
 	string getHour() {
 		return this->hour;
 	};
@@ -26,6 +26,15 @@ public:
 	}
 	int getNumbersVoo() {
 		return this->numbersVoo;
-	}
+	};
+	void setHour(string hour) {
+		this->hour = hour;
+	};
+	void setDuration(string duration) {
+		this->duration = duration;
+	};
+	void setVoo(string voo) {
+		this->voo = voo;
+	};
 };
 

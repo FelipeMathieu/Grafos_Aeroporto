@@ -18,8 +18,8 @@ public:
 	Node *getFirst();
 	Node *getLast();
 	bool isVoid();
-	void insertFirst(string initials, string day, string hour, string duration);
-	void insertLast(string initials, string day, string hour, string duration);
+	void insertFirst(string initials, string day, string hour, string duration, string voo);
+	void insertLast(string initials, string day, string hour, string duration, string voo);
 	void printList();
 	//void insertInOrder(string initials, string day);
 	Node *insertAfter(Node *thisNode, Node *aux);
@@ -32,5 +32,6 @@ public:
 	};
 	bool findElement(string initials, string day);
 	void findAndAttribute(string initials, string day);
+	bool findEdge(string hour, string duration, string voo);
 };
 

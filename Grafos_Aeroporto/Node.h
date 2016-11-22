@@ -16,7 +16,7 @@ public:
 	Node();
 	~Node();
 	Node(string initials, string day);
-	Node(string initials, string day, string hour, string duration);
+	Node(string initials, string day, string hour, string duration, string voo);
 
 	string getAirport();
 	string getDay();

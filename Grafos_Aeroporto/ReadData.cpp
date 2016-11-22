@@ -51,8 +51,15 @@ void ReadData::readFile(string nameFile, Grafo *G) {
 			}
 			else {
 				informations = this->split(line);
-				G->insertGrafo(informations.at(4), informations.at(6).substr(0, 10), informations.at(0), informations.at(6).substr(11, 16), informations.at(5), informations.at(5));
+				if (informations.at(8).substr(0, 10) == "REALIZADO") {
+					G->insertGrafo(informations.at(4), informations.at(6).substr(0, 10), informations.at(0), informations.at(6).substr(11, 16), informations.at(5), informations.at(5), informations.at(7).substr(0, 10));
+				}
+				else {
+					G->insertGrafo(informations.at(4), informations.at(6).substr(0, 10), informations.at(0), informations.at(6).substr(11, 16), informations.at(5), informations.at(5), informations.at(8).substr(0, 10));
+				}
 			}
 		}
 	}
+	G->getArestas();
+	G->getVertices();
 }

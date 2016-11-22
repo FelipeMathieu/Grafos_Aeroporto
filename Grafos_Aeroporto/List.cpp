@@ -34,8 +34,8 @@ bool List::isVoid() {
 	}
 }
 
-void List::insertFirst(string initials, string day, string hour, string duration) {
-	Node *p = new Node(initials, day, hour, duration);
+void List::insertFirst(string initials, string day, string hour, string duration, string voo) {
+	Node *p = new Node(initials, day, hour, duration, voo);
 
 	if (this->isVoid()) {
 		this->first = p;
@@ -49,8 +49,8 @@ void List::insertFirst(string initials, string day, string hour, string duration
 	}
 }
 
-void List::insertLast(string initials, string day, string hour, string duration) {
-	Node *p = new Node(initials, day, hour, duration);
+void List::insertLast(string initials, string day, string hour, string duration, string voo) {
+	Node *p = new Node(initials, day, hour, duration, voo);
 
 	if (this->isVoid()) {
 		this->first = p;
@@ -191,4 +191,19 @@ void List::findAndAttribute(string initials, string day) {
 			break;
 		}
 	}
+}
+
+bool List::findEdge(string hour, string duration, string voo){
+	if (this->size > 0) {
+		for (Node *p = this->first; p != NULL; p = p->getProx()) {
+			if (hour == p->getHour() && duration == p->getDuration() && voo == p->getVoo()) {
+				return true;
+				break;
+			}
+		}
+	}
+	else {
+		return false;
+	}
+	return false;
 }
