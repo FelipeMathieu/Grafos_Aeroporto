@@ -22,6 +22,6 @@ public:
 	~ReadData();
 	
 	void readFile(string nameFile, Grafo *G);
-	void populateGrafo(Grafo *G);
+	string calcDuracao(string saida, string chegada);
 };
 

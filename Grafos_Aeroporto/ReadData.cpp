@@ -52,14 +52,50 @@ void ReadData::readFile(string nameFile, Grafo *G) {
 			else {
 				informations = this->split(line);
 				if (informations.at(8).substr(0, 10) == "REALIZADO") {
-					G->insertGrafo(informations.at(4), informations.at(6).substr(0, 10), informations.at(0), informations.at(6).substr(11, 16), informations.at(5), informations.at(5), informations.at(7).substr(0, 10));
+					G->insertGrafo(informations.at(4), informations.at(6).substr(0, 10), informations.at(0), informations.at(6).substr(11, 16), this->calcDuracao(informations.at(7), informations.at(6)), informations.at(5), informations.at(7).substr(0, 10));
+				}
+				else if(informations.at(8).substr(0, 10) != "CANCELADO"){
+					G->insertGrafo(informations.at(4), informations.at(6).substr(0, 10), informations.at(0), informations.at(6).substr(11, 16), this->calcDuracao(informations.at(8), informations.at(6)), informations.at(5), informations.at(8).substr(0, 10));
 				}
 				else {
-					G->insertGrafo(informations.at(4), informations.at(6).substr(0, 10), informations.at(0), informations.at(6).substr(11, 16), informations.at(5), informations.at(5), informations.at(8).substr(0, 10));
+					G->insertGrafo(informations.at(4), informations.at(6).substr(0, 10), informations.at(0), informations.at(6).substr(11, 16), "", informations.at(5), "CANCELADO");
 				}
 			}
 		}
 	}
 	G->getArestas();
 	G->getVertices();
+}
+
+string ReadData::calcDuracao(string saida, string chegada) {
+	string hS = saida.substr(11, 2);
+	string mS = saida.substr(14, 2);
+	string hC = chegada.substr(11, 2);
+	string mC = chegada.substr(14, 2);
+	if (std::stoi(hS) < std::stoi(hC)) {
+		int horas = std::stoi(hC) - std::stoi(hS);
+		if (std::stoi(mS) > std::stoi(mC)) {
+			horas--;
+			int minutos = std::stoi(mC) - std::stoi(mS) + 60;
+			return std::to_string(horas) + ':' + std::to_string(minutos);
+		}
+		else {
+
+			int minutos = std::stoi(mC) + std::stoi(mS);
+			return std::to_string(horas) + ':' + std::to_string(minutos);
+		}
+	}
+	else {
+		int horas = 24 - std::stoi(hS) + std::stoi(hC);
+		if (std::stoi(mS) > std::stoi(mC)) {
+			horas--;
+			int minutos = std::stoi(mC) - std::stoi(mS) + 60;
+			return std::to_string(horas) + ':' + std::to_string(minutos);
+		}
+		else {
+
+			int minutos = std::stoi(mC) - std::stoi(mS);
+			return std::to_string(horas) + ':' + std::to_string(minutos);
+		}
+	}
 }
