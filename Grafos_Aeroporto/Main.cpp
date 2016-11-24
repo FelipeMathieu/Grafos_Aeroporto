@@ -62,7 +62,7 @@ void main(void) {
 		break;
 	case 4:
 		cout << "Loading..." << endl;
-		if (G.isEul) {
+		if (G.isEul()) {
 			cout << "Grafo e Euleriano." << endl;
 		}
 		else {
