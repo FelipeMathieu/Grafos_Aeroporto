@@ -57,6 +57,8 @@ public:
 		}
 	};
 	void setPg(Grafo *G, string initials, string day);
+	bool isConex();
+	int indexVec(vector<pair<pair<string, string>, int>> v, string first, string second);
 	bool isEul();
 };
 

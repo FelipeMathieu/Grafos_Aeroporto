@@ -68,6 +68,7 @@ void Grafo::insertGrafo(string initials, string day, string voo, string hour, st
 	}
 }
 
+
 bool Grafo::find(string initials, string day) {
 	for (auto &x : this->G) {
 		if (x.first.first == day && x.first.second == initials) {
@@ -85,14 +86,59 @@ bool Grafo::isEul() {
 			cont++;
 		}
 		if (cont > 2) {
-			return 0;
+			return false;
 		}
 	}
 
 	if (cont == 2 || cont == 0) {
-		return 1;
+		return true;
 	}
 	else {
-		return 0;
+		return false;
+	}
+}
+
+bool Grafo::isConex() {
+	vector<pair<pair<string, string>, int>> v;
+	pair<string, string> aux;
+	int i = 0, j = 0;
+	for (auto &x : this->G) {
+		aux.first = x.first.first;
+		aux.second = x.first.second;
+		v.push_back(make_pair(aux, -1));
+	}
+
+	for (auto &x : this->G) {
+		j = this->indexVec(v, x.first.first, x.first.second);
+		if (v.at(j).second == -1) {
+			v.at(j).second = i;
+		}
+		else if (v.at(j).second != i) {
+			i++;
+			v.at(j).second = i;
+			return false;
+		}
+		if (!x.second.isVoid() && v.at(j).second != -1){
+			for (Node *p = x.second.getFirst(); p != NULL; p = p->getProx()) {
+				j = this->indexVec(v, p->getDay(), p->getAirport());
+				v.at(j).second = i;
+			}
+		}
+		j = 0;
+	}
+
+	if (i > 0) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+int Grafo::indexVec(vector<pair<pair<string, string>, int>> v, string first, string second) {
+	for (int i = 0; i < v.size(); i++) {
+		if (v.at(i).first.first == first && v.at(i).first.second == second) {
+			return i;
+		}
 	}
 }
