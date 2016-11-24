@@ -10,7 +10,6 @@ private:
 	string hour;
 	string duration;
 	string voo;
-	int numbersVoo = 0;
 public:
 	Edge();
 	~Edge();
@@ -24,9 +23,6 @@ public:
 	string getVoo() {
 		return this->voo;
 	}
-	int getNumbersVoo() {
-		return this->numbersVoo;
-	};
 	void setHour(string hour) {
 		this->hour = hour;
 	};

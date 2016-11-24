@@ -17,6 +17,13 @@ map<pair<string, string>, List> Grafo::newGrafo(string initials, string day) {
 	return this->G;
 }
 
+void Grafo::setPg(Grafo *G, string initials, string day) {
+	pair<string, string> aux;
+	aux.first = day;
+	aux.second = initials;
+	G->G[aux] = *new List();
+}
+
 Grafo::Grafo(string initials, string day) {
 	pair<string, string> aux;
 	aux.first = day;
@@ -31,14 +38,14 @@ void Grafo::insertGrafo(string initials, string day, string voo, string hour, st
 		this->G = this->newGrafo(initials, day);
 	}
 	else {
-		if (!this->find(initials, day) && initials == "KMIA") {
+		if (!this->find(initials, day)) {
 			aux.first = day;
 			aux.second = initials;
 			this->G[aux] = *new List();
 			if (!this->G[aux].findEdge(hour, duration, voo) && arrival != "" && arrival != "CANCELADO") {
 				aux.first = day;
 				aux.second = initials;
-				this->G[aux].insertFirst(destination, day, hour, duration, voo);
+				this->G[aux].insertFirst(destination, arrival, hour, duration, voo);
 				if (!this->find(destination, arrival)) {
 					aux.first = arrival;
 					aux.second = destination;
@@ -50,7 +57,7 @@ void Grafo::insertGrafo(string initials, string day, string voo, string hour, st
 			aux.first = day;
 			aux.second = initials;
 			if (!this->G[aux].findEdge(hour, duration, voo) && arrival != "" && arrival != "CANCELADO") {
-				this->G[aux].insertFirst(destination, day, hour, duration, voo);
+				this->G[aux].insertFirst(destination, arrival, hour, duration, voo);
 				if (!this->find(destination, arrival)) {
 					aux.first = arrival;
 					aux.second = destination;
@@ -69,4 +76,23 @@ bool Grafo::find(string initials, string day) {
 		}
 	}
 	return false;
+}
+
+bool Grafo::isEul() {
+	int cont = 0;
+	for (auto &x : this->G) {
+		if ((x.second.listSize() % 2) != 0){
+			cont++;
+		}
+		if (cont > 2) {
+			return 0;
+		}
+	}
+
+	if (cont == 2 || cont == 0) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
 }
